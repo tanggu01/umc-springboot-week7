@@ -11,4 +11,8 @@ public class DeleteUserReq {
     private int userIdx;
     //추가
     private String status;
+
+    public DeleteUserReq(int userIdx) {
+        this.userIdx = userIdx;
+    }
 }

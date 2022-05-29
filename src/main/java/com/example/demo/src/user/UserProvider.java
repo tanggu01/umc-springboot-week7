@@ -58,6 +58,15 @@ public class UserProvider {
         }
     }
 
+    //7주차 챌린지과제
+    public int checkUser(int userIdx) throws BaseException{
+        try{
+            return userDao.checkUser(userIdx);
+        } catch (Exception exception){
+            throw new BaseException(DATABASE_ERROR);
+        }
+    }
+
 
 
 }
