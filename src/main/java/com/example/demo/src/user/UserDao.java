@@ -76,6 +76,17 @@ public class UserDao {
 
     }
 
+
+    //7주차 챌린지과제
+    public int checkUser(int userIdx){ //존재하는지
+        String checkUserQuery = "select exists(select userIdx from User where userIdx = ?)";
+        int checkUserParams = userIdx;
+        return this.jdbcTemplate.queryForObject(checkUserQuery,
+                int.class,
+                checkUserParams);
+
+
+
     public int modifyUserName(PatchUserReq patchUserReq){
         String modifyUserNameQuery = "update User set nickName = ? where userIdx = ? ";
         Object[] modifyUserNameParams = new Object[]{patchUserReq.getNickName(), patchUserReq.getUserIdx()};

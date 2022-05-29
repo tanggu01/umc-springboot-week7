@@ -59,12 +59,35 @@ public class UserController {
         }
     }
 
+    //툭정 유저 조회 API
+    //- [GET] /users/:userIdx
     @ResponseBody
     @GetMapping("/{userIdx}") // (GET) 127.0.0.1:9000/users/:userIdx
     public BaseResponse<GetUserRes> getUserByIdx(@PathVariable("userIdx") int userIdx) {
         try {
             GetUserRes getUsersRes = userProvider.getUsersByIdx(userIdx);
             return new BaseResponse<>(getUsersRes);
+        } catch (BaseException exception) {
+            return new BaseResponse<>((exception.getStatus()));
+        }
+    }
+
+
+
+    //0528 유저 삭제 API
+    @ResponseBody
+    @DeleteMapping("/{userIdx}") // (GET) 127.0.0.1:9000/users/:userIdx
+    public BaseResponse<String> deleteUserByIdx(@PathVariable("userIdx") int userIdx) {
+        try {
+//            DeleteUserRes deleteUserRes = userProvider.DeleteUsersByIdx(userIdx);
+
+            DeleteUserReq deleteUserReq = new DeleteUserReq(userIdx);
+            userService.deleteUserbyIdx(userIdx);
+
+            String result = " 유저가 삭제되었습니다.";
+            return new BaseResponse<>(result); //이 Result는 어디에서 온거지?
+
+//            return new BaseResponse<>(deleteUserRes);
         } catch (BaseException exception) {
             return new BaseResponse<>((exception.getStatus()));
         }
@@ -125,7 +148,7 @@ public class UserController {
 
     //유저 삭제 API: status 만 inactive 로 바꿔주기. PATCH? 위에와 비슷하게 하는데 왜 Delete는 Res 가 있고 위에꺼는 없는지.
     @ResponseBody
-    @PatchMapping("/{userIdx}/status") // (PATCH) 127.0.0.1:9000/users/:userIdx
+    @PatchMapping("/delete/{userIdx}") // (PATCH) 127.0.0.1:9000/users/:userIdx
     public BaseResponse<String> deleteUser(@PathVariable("userIdx") int userIdx, @RequestBody DeleteUserReq user) { //클라이언트에게 보내줄정보
         try {
             DeleteUserReq deleteUserReq = new DeleteUserReq(userIdx, user.getStatus());

@@ -97,8 +97,11 @@ public class UserService {
     }
 
 
-    //유저삭제 API 2번째
+    //유저삭제 API 2번째 0528
     public void deleteUserbyIdx(int userIdx) throws BaseException {
+        if (userProvider.checkUser(userIdx) == 0) {
+            throw new BaseException(DELETE_USER_NOTEXIST);
+        }
         try {
             int result = userDao.deleteUserbyIdx(userIdx);
 
